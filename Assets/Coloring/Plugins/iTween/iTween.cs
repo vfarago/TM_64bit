@@ -8182,17 +8182,18 @@ public class iTween : MonoBehaviour{
 		if (!args.Contains("easetype")) {
 			args.Add("easetype",EaseType.linear);
 		}
-		
+
 		//set tempColor and base fromColor:
-		if(target.GetComponent(typeof(GUITexture))){
-			tempColor=fromColor=target.GetComponent<GUITexture>().color;	
-		}else if(target.GetComponent(typeof(GUIText))){
-			tempColor=fromColor=target.GetComponent<GUIText>().material.color;
-		}else if(target.GetComponent<Renderer>()){
-			tempColor=fromColor=target.GetComponent<Renderer>().material.color;
-		}else if(target.GetComponent<Light>()){
-			tempColor=fromColor=target.GetComponent<Light>().color;
-		}
+		//바꿔야합니다0627
+		//if (target.GetComponent(typeof(GUITexture))){
+		//	tempColor=fromColor=target.GetComponent<GUITexture>().color;	
+		//}else if(target.GetComponent(typeof(GUIText))){
+		//	tempColor=fromColor=target.GetComponent<GUIText>().material.color;
+		//}else if(target.GetComponent<Renderer>()){
+		//	tempColor=fromColor=target.GetComponent<Renderer>().material.color;
+		//}else if(target.GetComponent<Light>()){
+		//	tempColor=fromColor=target.GetComponent<Light>().color;
+		//}
 		
 		//set augmented fromColor:
 		if(args.Contains("color")){
@@ -8220,17 +8221,18 @@ public class iTween : MonoBehaviour{
 			fromColor.a=(float)args["alpha"];
 			args.Remove("alpha");
 		}
-		
+
 		//apply fromColor:
-		if(target.GetComponent(typeof(GUITexture))){
-			target.GetComponent<GUITexture>().color=fromColor;	
-		}else if(target.GetComponent(typeof(GUIText))){
-			target.GetComponent<GUIText>().material.color=fromColor;
-		}else if(target.GetComponent<Renderer>()){
-			target.GetComponent<Renderer>().material.color=fromColor;
-		}else if(target.GetComponent<Light>()){
-			target.GetComponent<Light>().color=fromColor;
-		}
+		//바꿔야합니다0627
+		//if (target.GetComponent(typeof(GUITexture))){
+		//	target.GetComponent<GUITexture>().color=fromColor;	
+		//}else if(target.GetComponent(typeof(GUIText))){
+		//	target.GetComponent<GUIText>().material.color=fromColor;
+		//}else if(target.GetComponent<Renderer>()){
+		//	target.GetComponent<Renderer>().material.color=fromColor;
+		//}else if(target.GetComponent<Light>()){
+		//	target.GetComponent<Light>().color=fromColor;
+		//}
 		
 		//set new color arg:
 		args["color"]=tempColor;
@@ -10809,28 +10811,29 @@ public class iTween : MonoBehaviour{
 	void GenerateColorToTargets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation:
 		//colors = new Color[3];
-		
+
+		//임시조치입니다0627
 		//from and init to values:
-		if(GetComponent(typeof(GUITexture))){
-			colors = new Color[1,3];
-			colors[0,0] = colors[0,1] = GetComponent<GUITexture>().color;
-		}else if(GetComponent(typeof(GUIText))){
-			colors = new Color[1,3];
-			colors[0,0] = colors[0,1] = GetComponent<GUIText>().material.color;
-		}else if(GetComponent<Renderer>()){
-			colors = new Color[GetComponent<Renderer>().materials.Length,3];
-			for (int i = 0; i < GetComponent<Renderer>().materials.Length; i++) {
-				colors[i,0]=GetComponent<Renderer>().materials[i].GetColor(namedcolorvalue.ToString());
-				colors[i,1]=GetComponent<Renderer>().materials[i].GetColor(namedcolorvalue.ToString());
-			}
-			//colors[0] = colors[1] = renderer.material.color;	
-		}else if(GetComponent<Light>()){
-			colors = new Color[1,3];
-			colors[0,0] = colors[0,1] = GetComponent<Light>().color;	
-		}else{
-			colors = new Color[1,3]; //empty placeholder incase the GO is perhaps an empty holder or something similar
-		}
-		
+		//if(GetComponent(typeof(GUITexture))){
+		//	colors = new Color[1,3];
+		//	colors[0,0] = colors[0,1] = GetComponent<GUITexture>().color;
+		//}else if(GetComponent(typeof(GUIText))){
+		//	colors = new Color[1,3];
+		//	colors[0,0] = colors[0,1] = GetComponent<GUIText>().material.color;
+		//}else if(GetComponent<Renderer>()){
+		//	colors = new Color[GetComponent<Renderer>().materials.Length,3];
+		//	for (int i = 0; i < GetComponent<Renderer>().materials.Length; i++) {
+		//		colors[i,0]=GetComponent<Renderer>().materials[i].GetColor(namedcolorvalue.ToString());
+		//		colors[i,1]=GetComponent<Renderer>().materials[i].GetColor(namedcolorvalue.ToString());
+		//	}
+		//	//colors[0] = colors[1] = renderer.material.color;	
+		//}else if(GetComponent<Light>()){
+		//	colors = new Color[1,3];
+		//	colors[0,0] = colors[0,1] = GetComponent<Light>().color;	
+		//}else{
+		//	colors = new Color[1,3]; //empty placeholder incase the GO is perhaps an empty holder or something similar
+		//}
+
 		//to values:
 		if (tweenArguments.Contains("color")) {
 			//colors[1]=(Color)tweenArguments["color"];
@@ -11591,42 +11594,44 @@ public class iTween : MonoBehaviour{
 		colors[2].b = ease(colors[0].b,colors[1].b,percentage);
 		colors[2].a = ease(colors[0].a,colors[1].a,percentage);
 		*/
-		
-		//apply:
-		if(GetComponent(typeof(GUITexture))){
-			//guiTexture.color=colors[2];
-			GetComponent<GUITexture>().color=colors[0,2];
-		}else if(GetComponent(typeof(GUIText))){
-			//guiText.material.color=colors[2];
-			GetComponent<GUIText>().material.color=colors[0,2];
-		}else if(GetComponent<Renderer>()){
-			//renderer.material.color=colors[2];
-			for (int i = 0; i < colors.GetLength(0); i++) {
-				GetComponent<Renderer>().materials[i].SetColor(namedcolorvalue.ToString(),colors[i,2]);
-			}
-		}else if(GetComponent<Light>()){
-			//light.color=colors[2];	
-			GetComponent<Light>().color=colors[0,2];
-		}
-		
-		//dial in:
-		if(percentage==1){
-			if(GetComponent(typeof(GUITexture))){
-				//guiTexture.color=colors[1];
-				GetComponent<GUITexture>().color=colors[0,1];
-			}else if(GetComponent(typeof(GUIText))){
-				//guiText.material.color=colors[1];
-				GetComponent<GUIText>().material.color=colors[0,1];
-			}else if(GetComponent<Renderer>()){
-				//renderer.material.color=colors[1];	
-				for (int i = 0; i < colors.GetLength(0); i++) {
-					GetComponent<Renderer>().materials[i].SetColor(namedcolorvalue.ToString(),colors[i,1]);
-				}
-			}else if(GetComponent<Light>()){
-				//light.color=colors[1];	
-				GetComponent<Light>().color=colors[0,1];
-			}			
-		}
+
+		//임시조치입니다0627
+		////apply:
+		//if (GetComponent(typeof(GUITexture))){
+		//	//guiTexture.color=colors[2];
+		//	GetComponent<GUITexture>().color=colors[0,2];
+		//}else if(GetComponent(typeof(GUIText))){
+		//	//guiText.material.color=colors[2];
+		//	GetComponent<GUIText>().material.color=colors[0,2];
+		//}else if(GetComponent<Renderer>()){
+		//	//renderer.material.color=colors[2];
+		//	for (int i = 0; i < colors.GetLength(0); i++) {
+		//		GetComponent<Renderer>().materials[i].SetColor(namedcolorvalue.ToString(),colors[i,2]);
+		//	}
+		//}else if(GetComponent<Light>()){
+		//	//light.color=colors[2];	
+		//	GetComponent<Light>().color=colors[0,2];
+		//}
+
+		//임시조치입니다0627
+		////dial in:
+		//if (percentage==1){
+		//	if(GetComponent(typeof(GUITexture))){
+		//		//guiTexture.color=colors[1];
+		//		GetComponent<GUITexture>().color=colors[0,1];
+		//	}else if(GetComponent(typeof(GUIText))){
+		//		//guiText.material.color=colors[1];
+		//		GetComponent<GUIText>().material.color=colors[0,1];
+		//	}else if(GetComponent<Renderer>()){
+		//		//renderer.material.color=colors[1];	
+		//		for (int i = 0; i < colors.GetLength(0); i++) {
+		//			GetComponent<Renderer>().materials[i].SetColor(namedcolorvalue.ToString(),colors[i,1]);
+		//		}
+		//	}else if(GetComponent<Light>()){
+		//		//light.color=colors[1];	
+		//		GetComponent<Light>().color=colors[0,1];
+		//	}			
+		//}
 	}	
 	
 	void ApplyAudioToTargets(){
@@ -12321,18 +12326,19 @@ public class iTween : MonoBehaviour{
 		}else{
 			time=Defaults.updateTime;
 		}
-		
-		//init values:
-		if(target.GetComponent(typeof(GUITexture))){
-			colors[0] = colors[1] = target.GetComponent<GUITexture>().color;
-		}else if(target.GetComponent(typeof(GUIText))){
-			colors[0] = colors[1] = target.GetComponent<GUIText>().material.color;
-		}else if(target.GetComponent<Renderer>()){
-			colors[0] = colors[1] = target.GetComponent<Renderer>().material.color;
-		}else if(target.GetComponent<Light>()){
-			colors[0] = colors[1] = target.GetComponent<Light>().color;	
-		}		
-		
+
+		//임시조치입니다0627
+		////init values:
+		//if(target.GetComponent(typeof(GUITexture))){
+		//	colors[0] = colors[1] = target.GetComponent<GUITexture>().color;
+		//}else if(target.GetComponent(typeof(GUIText))){
+		//	colors[0] = colors[1] = target.GetComponent<GUIText>().material.color;
+		//}else if(target.GetComponent<Renderer>()){
+		//	colors[0] = colors[1] = target.GetComponent<Renderer>().material.color;
+		//}else if(target.GetComponent<Light>()){
+		//	colors[0] = colors[1] = target.GetComponent<Light>().color;	
+		//}		
+
 		//to values:
 		if (args.Contains("color")) {
 			colors[1]=(Color)args["color"];
@@ -12356,19 +12362,20 @@ public class iTween : MonoBehaviour{
 		colors[3].g=Mathf.SmoothDamp(colors[0].g,colors[1].g,ref colors[2].g,time);
 		colors[3].b=Mathf.SmoothDamp(colors[0].b,colors[1].b,ref colors[2].b,time);
 		colors[3].a=Mathf.SmoothDamp(colors[0].a,colors[1].a,ref colors[2].a,time);
-				
-		//apply:
-		if(target.GetComponent(typeof(GUITexture))){
-			target.GetComponent<GUITexture>().color=colors[3];
-		}else if(target.GetComponent(typeof(GUIText))){
-			target.GetComponent<GUIText>().material.color=colors[3];
-		}else if(target.GetComponent<Renderer>()){
-			target.GetComponent<Renderer>().material.color=colors[3];
-		}else if(target.GetComponent<Light>()){
-			target.GetComponent<Light>().color=colors[3];	
-		}
-	}	
-	
+
+		//임시조치입니다0627
+		////apply:
+		//if(target.GetComponent(typeof(GUITexture))){
+		//	target.GetComponent<GUITexture>().color=colors[3];
+		//}else if(target.GetComponent(typeof(GUIText))){
+		//	target.GetComponent<GUIText>().material.color=colors[3];
+		//}else if(target.GetComponent<Renderer>()){
+		//	target.GetComponent<Renderer>().material.color=colors[3];
+		//}else if(target.GetComponent<Light>()){
+		//	target.GetComponent<Light>().color=colors[3];	
+		//}
+	}
+
 	/// <summary>
 	/// Similar to ColorTo but incredibly less expensive for usage inside the Update function or similar looping situations involving a "live" set of changing values with MINIMUM customization options. Does not utilize an EaseType.
 	/// </summary>
@@ -13485,10 +13492,12 @@ public class iTween : MonoBehaviour{
 	/// <param name='texture'>
 	/// A <see cref="Texture2D"/>
 	/// </param>
-	public static void CameraFadeSwap(Texture2D texture){
-		if(cameraFade){
-			cameraFade.GetComponent<GUITexture>().texture=texture;
-		}
+	public static void CameraFadeSwap(Texture2D texture)
+	{
+		//임시조치입니다0627
+		//if (cameraFade){
+		//	cameraFade.GetComponent<GUITexture>().texture=texture;
+		//}
 	}
 	
 	/// <summary>
@@ -13510,9 +13519,10 @@ public class iTween : MonoBehaviour{
 			//establish colorFade object:
 			cameraFade = new GameObject("iTween Camera Fade");
 			cameraFade.transform.position= new Vector3(.5f,.5f,depth);
-			cameraFade.AddComponent<GUITexture>();
-			cameraFade.GetComponent<GUITexture>().texture=texture;
-			cameraFade.GetComponent<GUITexture>().color = new Color(.5f,.5f,.5f,0);
+			//임시조치입니다0627
+			//cameraFade.AddComponent<GUITexture>();
+			//cameraFade.GetComponent<GUITexture>().texture=texture;
+			//cameraFade.GetComponent<GUITexture>().color = new Color(.5f,.5f,.5f,0);
 			return cameraFade;
 		}
 	}
@@ -13533,9 +13543,10 @@ public class iTween : MonoBehaviour{
 			//establish colorFade object:
 			cameraFade = new GameObject("iTween Camera Fade");
 			cameraFade.transform.position= new Vector3(.5f,.5f,Defaults.cameraFadeDepth);
-            cameraFade.AddComponent<GUITexture>();
-			cameraFade.GetComponent<GUITexture>().texture=texture;
-			cameraFade.GetComponent<GUITexture>().color = new Color(.5f,.5f,.5f,0);
+			//임시조치입니다0627
+			//         cameraFade.AddComponent<GUITexture>();
+			//cameraFade.GetComponent<GUITexture>().texture=texture;
+			//cameraFade.GetComponent<GUITexture>().color = new Color(.5f,.5f,.5f,0);
 			return cameraFade;
 		}
 	}
@@ -13553,9 +13564,10 @@ public class iTween : MonoBehaviour{
 			//establish colorFade object:
 			cameraFade = new GameObject("iTween Camera Fade");
 			cameraFade.transform.position= new Vector3(.5f,.5f,Defaults.cameraFadeDepth);
-            cameraFade.AddComponent<GUITexture>();
-			cameraFade.GetComponent<GUITexture>().texture=CameraTexture(Color.black);
-			cameraFade.GetComponent<GUITexture>().color = new Color(.5f,.5f,.5f,0);
+			//임시조치입니다0627
+			//         cameraFade.AddComponent<GUITexture>();
+			//cameraFade.GetComponent<GUITexture>().texture=CameraTexture(Color.black);
+			//cameraFade.GetComponent<GUITexture>().color = new Color(.5f,.5f,.5f,0);
 			return cameraFade;
 		}
 	}	

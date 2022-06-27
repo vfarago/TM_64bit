@@ -341,7 +341,8 @@ public class CanvasManager : MonoBehaviour
     //Front Camera - Back Camera Swap Method
     private void SwapCamera()
     {
-        arManager.UseFrontCamera(!isFrontCam);
+        //안씁니다0627
+        //arManager.UseFrontCamera(!isFrontCam);
         if (prefabLoader.isTargetoff)
             prefabLoader.ModelChangePos();
 
@@ -761,10 +762,11 @@ public class CanvasManager : MonoBehaviour
             OnSingleTarget(isSingleTarget);
             PushedButtonReset();
 
-            if (isFrontCam)
-            {
-                arManager.UseFrontCamera(isFrontCam);
-            }
+            //안씁니다0627
+            //if (isFrontCam)
+            //{
+            //    arManager.UseFrontCamera(isFrontCam);
+            //}
             isPhonics = false;
 
             FreeContentNotice();

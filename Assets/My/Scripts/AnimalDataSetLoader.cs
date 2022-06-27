@@ -32,176 +32,178 @@ public class AnimalDataSetLoader : MonoBehaviour
     CanvasManager canvasManager;
     PrefabShelter prefabShelter;
 
-    void Awake()
-    {
-        VuforiaAbstractConfiguration.Instance.Vuforia.DelayedInitialization = false;
-        arCam.GetComponent<VuforiaBehaviour>().enabled = true;
-        VuforiaRuntime.Instance.InitVuforia();
+    //바꿔야합니다0627
+    //void Awake()
+    //{
+    //    VuforiaAbstractConfiguration.Instance.Vuforia.DelayedInitialization = false;
+    //    arCam.GetComponent<VuforiaBehaviour>().enabled = true;
+    //    VuforiaRuntime.Instance.InitVuforia();
 
-        canvasManager = Manager.CanvasManager;
-        prefabShelter = Manager.PrefabShelter;
+    //    canvasManager = Manager.CanvasManager;
+    //    prefabShelter = Manager.PrefabShelter;
 
-        tagmeTargets = new List<string>();
-        tagmeDataSets = new List<string>();
+    //    tagmeTargets = new List<string>();
+    //    tagmeDataSets = new List<string>();
 
-        dataSetName = string.Format("TagMe3D_New_Book{0}", dataSetNumber);
+    //    dataSetName = string.Format("TagMe3D_New_Book{0}", dataSetNumber);
 
-        //Vuforia ver.6.2
-        VuforiaARController.Instance.RegisterVuforiaStartedCallback(LoadDataSet);
-    }
+    //    //Vuforia ver.6.2
+    //    VuforiaARController.Instance.RegisterVuforiaStartedCallback(LoadDataSet);
+    //}
 
-    void OnDestroy()
-    {
-        VuforiaARController.Instance.UnregisterVuforiaStartedCallback(LoadDataSet);
-    }
+    //void OnDestroy()
+    //{
+    //    VuforiaARController.Instance.UnregisterVuforiaStartedCallback(LoadDataSet);
+    //}
 
-    void LoadDataSet()
-    {
-        ObjectTracker objectTracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
+    //void LoadDataSet()
+    //{
+    //    ObjectTracker objectTracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
 
-        dataSetName = string.Format("TagMe3D_New_Book{0}", dataSetNumber);
-        DataSet dataSet = objectTracker.CreateDataSet();
-        if (dataSet.Load(dataSetName))
-        {
-            if (!objectTracker.ActivateDataSet(dataSet))
-            {
-                // Note: ImageTracker cannot have more than 1000 total targets activated
-                Debug.Log("<color=yellow>Failed to Activate DataSet: " + (dataSetName) + "</color>");
-            }
+    //    dataSetName = string.Format("TagMe3D_New_Book{0}", dataSetNumber);
+    //    DataSet dataSet = objectTracker.CreateDataSet();
+    //    if (dataSet.Load(dataSetName))
+    //    {
+    //        if (!objectTracker.ActivateDataSet(dataSet))
+    //        {
+    //            // Note: ImageTracker cannot have more than 1000 total targets activated
+    //            Debug.Log("<color=yellow>Failed to Activate DataSet: " + (dataSetName) + "</color>");
+    //        }
 
-            if (!objectTracker.Start())
-            {
-                Debug.Log("<color=yellow>Tracker Failed to Start.</color>");
-            }
+    //        if (!objectTracker.Start())
+    //        {
+    //            Debug.Log("<color=yellow>Tracker Failed to Start.</color>");
+    //        }
 
-            StartCoroutine(CheckFile(dataSetName, objectTracker));
-            objectTracker.Stop();
-        }
-        else
-        {
-            Debug.LogError("<color=yellow>Failed to load dataset: '" + (dataSetName) + "'</color>");
-        }
-    }
+    //        StartCoroutine(CheckFile(dataSetName, objectTracker));
+    //        objectTracker.Stop();
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("<color=yellow>Failed to load dataset: '" + (dataSetName) + "'</color>");
+    //    }
+    //}
 
-    IEnumerator CheckFile(string dataSetName, ObjectTracker objectTracker)
-    {
-        GameObject temp = transform.Find(dataSetName).gameObject;
-        IEnumerable<TrackableBehaviour> tbs = TrackerManager.Instance.GetStateManager().GetTrackableBehaviours();
+    //바꿔야합니다0627
+    //IEnumerator CheckFile(string dataSetName, ObjectTracker objectTracker)
+    //{
+    //    GameObject temp = transform.Find(dataSetName).gameObject;
+    //    IEnumerable<TrackableBehaviour> tbs = TrackerManager.Instance.GetStateManager().GetTrackableBehaviours();
 
-        foreach (TrackableBehaviour tb in tbs)
-        {
-            if (tb.name.Equals("New Game Object"))
-            {
-                tb.gameObject.name = tb.TrackableName;
+    //    foreach (TrackableBehaviour tb in tbs)
+    //    {
+    //        if (tb.name.Equals("New Game Object"))
+    //        {
+    //            tb.gameObject.name = tb.TrackableName;
 
-                if (tb.TrackableName.Contains("cover"))
-                {
-                    tb.gameObject.transform.parent = transform;
-                    tb.gameObject.AddComponent<CoverTrackerbleEventHandler>();
-                }
-                else
-                {
-                    bool checkfree = false;
+    //            if (tb.TrackableName.Contains("cover"))
+    //            {
+    //                tb.gameObject.transform.parent = transform;
+    //                tb.gameObject.AddComponent<CoverTrackerbleEventHandler>();
+    //            }
+    //            else
+    //            {
+    //                bool checkfree = false;
 
-                    tb.gameObject.transform.parent = temp.transform;
-                    DynamicTrackableEventHandler dteh = tb.gameObject.AddComponent<DynamicTrackableEventHandler>();
+    //                tb.gameObject.transform.parent = temp.transform;
+    //                DynamicTrackableEventHandler dteh = tb.gameObject.AddComponent<DynamicTrackableEventHandler>();
 
-                    for (int i = 0; i < freePage.Length; i++)
-                    {
-                        if (freePage[i].Equals(tb.TrackableName))
-                        {
-                            checkfree = true;
-                            break;
-                        }
-                    }
-                    dteh.isFreeModel = checkfree;
+    //                for (int i = 0; i < freePage.Length; i++)
+    //                {
+    //                    if (freePage[i].Equals(tb.TrackableName))
+    //                    {
+    //                        checkfree = true;
+    //                        break;
+    //                    }
+    //                }
+    //                dteh.isFreeModel = checkfree;
 
-                    if (checkfree)
-                        tagmeTargets.Add(string.Empty);
-                    else
-                        tagmeTargets.Add(tb.TrackableName.ToLower());
-                }
-            }
-        }
-        yield return new WaitForEndOfFrame();
+    //                if (checkfree)
+    //                    tagmeTargets.Add(string.Empty);
+    //                else
+    //                    tagmeTargets.Add(tb.TrackableName.ToLower());
+    //            }
+    //        }
+    //    }
+    //    yield return new WaitForEndOfFrame();
 
-        bool check = true;
-        bool assetCheck = true;
-        bool[] checks = new bool[100];
+    //    bool check = true;
+    //    bool assetCheck = true;
+    //    bool[] checks = new bool[100];
 
-        for (int i = 0; i < checks.Length; i++)
-        {
-            checks[i] = true;
-        }
+    //    for (int i = 0; i < checks.Length; i++)
+    //    {
+    //        checks[i] = true;
+    //    }
 
-        assetCheck = File.Exists(string.Format("{0}/assets/tagme3d_new_book{1}", Application.persistentDataPath, dataSetNumber));
-
-
-        for (int i = 0; i < 100; i++)
-        {
-            int index = i + ((dataSetNumber - 1) * 100);
+    //    assetCheck = File.Exists(string.Format("{0}/assets/tagme3d_new_book{1}", Application.persistentDataPath, dataSetNumber));
 
 
-            if (!tagmeTargets[index].Equals(string.Empty))
-            {
-                bool videoPath = File.Exists(string.Format("{0}/videos/tagme3d_new_book{1}_video", Application.persistentDataPath, dataSetNumber));
-                bool audioPath = File.Exists(string.Format("{0}/audios/tagme3d_new_book{1}_audio", Application.persistentDataPath, dataSetNumber));
-                if (!videoPath || !audioPath)
-                {
-                    checks[i] = false;
-                    break;
-                }
-                //if(!File.Exists(audioPath) || File.Exists(videoPath))
-                //{
-                //    checks[i] = false;
-                //    break;
-                //}
-                //for (int j = 0; j < audioFolder.Length; j++)
-                //{
-                //    string audioPath = string.Format("{0}/audio/{1}/{2}.mp3", Application.persistentDataPath, audioFolder[j], tagmeTargets[index]);
-
-                //    if (!File.Exists(videoPath) || !File.Exists(audioPath))
-                //    {
-                //        checks[i] = false;
-                //        break;
-                //    }
-                //}
-            }
-
-            progressBar.fillAmount = 0.5f + (((index + 1) / 500f) * 0.5f);
-            yield return progressBar.fillAmount;
-        }
+    //    for (int i = 0; i < 100; i++)
+    //    {
+    //        int index = i + ((dataSetNumber - 1) * 100);
 
 
-        for (int i = 0; i < checks.Length; i++)
-        {
-            if (!checks[i])
-            {
-                check = false;
-                break;
-            }
-        }
-        yield return check = assetCheck && check;
+    //        if (!tagmeTargets[index].Equals(string.Empty))
+    //        {
+    //            bool videoPath = File.Exists(string.Format("{0}/videos/tagme3d_new_book{1}_video", Application.persistentDataPath, dataSetNumber));
+    //            bool audioPath = File.Exists(string.Format("{0}/audios/tagme3d_new_book{1}_audio", Application.persistentDataPath, dataSetNumber));
+    //            if (!videoPath || !audioPath)
+    //            {
+    //                checks[i] = false;
+    //                break;
+    //            }
+    //            //if(!File.Exists(audioPath) || File.Exists(videoPath))
+    //            //{
+    //            //    checks[i] = false;
+    //            //    break;
+    //            //}
+    //            //for (int j = 0; j < audioFolder.Length; j++)
+    //            //{
+    //            //    string audioPath = string.Format("{0}/audio/{1}/{2}.mp3", Application.persistentDataPath, audioFolder[j], tagmeTargets[index]);
 
-        if (check)
-        {
-            tagmeDataSets.Add(dataSetName);
-        }
+    //            //    if (!File.Exists(videoPath) || !File.Exists(audioPath))
+    //            //    {
+    //            //        checks[i] = false;
+    //            //        break;
+    //            //    }
+    //            //}
+    //        }
 
-        if (dataSetNumber < 5)
-        {
-            dataSetNumber++;
+    //        progressBar.fillAmount = 0.5f + (((index + 1) / 500f) * 0.5f);
+    //        yield return progressBar.fillAmount;
+    //    }
 
 
-            VuforiaARController.Instance.RegisterVuforiaStartedCallback(LoadDataSet);
-        }
-        else
-        {
-            StartCoroutine(TargetPrefabSetting());
-        }
+    //    for (int i = 0; i < checks.Length; i++)
+    //    {
+    //        if (!checks[i])
+    //        {
+    //            check = false;
+    //            break;
+    //        }
+    //    }
+    //    yield return check = assetCheck && check;
 
-        yield return null;
-    }
+    //    if (check)
+    //    {
+    //        tagmeDataSets.Add(dataSetName);
+    //    }
+
+    //    if (dataSetNumber < 5)
+    //    {
+    //        dataSetNumber++;
+
+
+    //        VuforiaARController.Instance.RegisterVuforiaStartedCallback(LoadDataSet);
+    //    }
+    //    else
+    //    {
+    //        StartCoroutine(TargetPrefabSetting());
+    //    }
+
+    //    yield return null;
+    //}
 
     //InitializeTarget() 5권 완료 후 AssetBundle 컴포넌트에 셋팅 → 로딩끝
     private IEnumerator TargetPrefabSetting()

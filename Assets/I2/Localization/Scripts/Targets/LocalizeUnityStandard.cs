@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 namespace I2.Loc
 {
 	public partial class Localize
 	{
 		#region Cache
 
-		GUIText 	mTarget_GUIText;
+		Text 	mTarget_GUIText;
 		TextMesh 	mTarget_TextMesh;
 		AudioSource mTarget_AudioSource;
-		GUITexture 	mTarget_GUITexture;
+		Image 	mTarget_GUITexture;
 		GameObject  mTarget_Child;
 		bool mInitializeAlignment = true;
-		TextAlignment mOriginalAlignmentStd = TextAlignment.Left;
+		TextAnchor mOriginalAlignmentStd = TextAnchor.MiddleLeft;
 
 		public void RegisterEvents_UnityStandard()
 		{
@@ -53,13 +53,13 @@ namespace I2.Loc
 
 		public void SetFinalTerms_GUITexture(string Main, string Secondary, out string PrimaryTerm, out string SecondaryTerm)
 		{
-			if (!mTarget_GUITexture || !mTarget_GUITexture.texture) 
+			if (!mTarget_GUITexture || !mTarget_GUITexture.sprite.texture) 
 			{
 				SetFinalTerms( string.Empty, string.Empty, out PrimaryTerm, out SecondaryTerm, false );
 			}
 			else
 			{
-				SetFinalTerms (mTarget_GUITexture.texture.name,	string.Empty, 		out PrimaryTerm, out SecondaryTerm, false);
+				SetFinalTerms (mTarget_GUITexture.sprite.texture.name,	string.Empty, 		out PrimaryTerm, out SecondaryTerm, false);
 			}
 		}
 
@@ -100,7 +100,7 @@ namespace I2.Loc
 			if (!string.IsNullOrEmpty(MainTranslation) && mTarget_GUIText.text != MainTranslation)
 			{
 				if (Localize.CurrentLocalizeComponent.CorrectAlignmentForRTL)
-					mTarget_GUIText.alignment = LocalizationManager.IsRight2Left ? TextAlignment.Right : mOriginalAlignmentStd;
+					mTarget_GUIText.alignment = LocalizationManager.IsRight2Left ? TextAnchor.MiddleRight : mOriginalAlignmentStd;
 				
 				mTarget_GUIText.text = MainTranslation;
 			}
@@ -108,27 +108,27 @@ namespace I2.Loc
 		
 		void DoLocalize_TextMesh( string MainTranslation, string SecondaryTranslation )
 		{
-			//--[ Localize Font Object ]----------
-			Font newFont = GetSecondaryTranslatedObj<Font>(ref MainTranslation, ref SecondaryTranslation);
-			if (newFont!=null && mTarget_TextMesh.font != newFont)
-			{
-				mTarget_TextMesh.font = newFont;
-				GetComponent<Renderer>().sharedMaterial = newFont.material;
-			}
+			////--[ Localize Font Object ]----------
+			//Font newFont = GetSecondaryTranslatedObj<Font>(ref MainTranslation, ref SecondaryTranslation);
+			//if (newFont!=null && mTarget_TextMesh.font != newFont)
+			//{
+			//	mTarget_TextMesh.font = newFont;
+			//	GetComponent<Renderer>().sharedMaterial = newFont.material;
+			//}
 			
-			//--[ Localize Text ]----------
-			if (mInitializeAlignment)
-			{
-				mInitializeAlignment = false;
-                mOriginalAlignmentStd = mTarget_TextMesh.alignment;
-			}
-			if (!string.IsNullOrEmpty(MainTranslation) && mTarget_TextMesh.text != MainTranslation)
-			{
-				if (Localize.CurrentLocalizeComponent.CorrectAlignmentForRTL)
-					mTarget_TextMesh.alignment = LocalizationManager.IsRight2Left ? TextAlignment.Right : mOriginalAlignmentStd;
+			////--[ Localize Text ]----------
+			//if (mInitializeAlignment)
+			//{
+			//	mInitializeAlignment = false;
+   //             mOriginalAlignmentStd = mTarget_TextMesh.anchor;
+			//}
+			//if (!string.IsNullOrEmpty(MainTranslation) && mTarget_TextMesh.text != MainTranslation)
+			//{
+			//	if (Localize.CurrentLocalizeComponent.CorrectAlignmentForRTL)
+			//		mTarget_TextMesh.alignment = LocalizationManager.IsRight2Left ? TextAlignment.Right : mOriginalAlignmentStd;
 
-				mTarget_TextMesh.text = MainTranslation;
-			}
+			//	mTarget_TextMesh.text = MainTranslation;
+			//}
 		}
 
 		void DoLocalize_AudioSource( string MainTranslation, string SecondaryTranslation )
@@ -149,13 +149,13 @@ namespace I2.Loc
 		
 		void DoLocalize_GUITexture( string MainTranslation, string SecondaryTranslation )
 		{
-			Texture Old = mTarget_GUITexture.texture;
-			if (Old!=null && Old.name!=MainTranslation)
-				mTarget_GUITexture.texture = FindTranslatedObject<Texture>(MainTranslation);
+			//Texture Old = mTarget_GUITexture.texture;
+			//if (Old!=null && Old.name!=MainTranslation)
+			//	mTarget_GUITexture.texture = FindTranslatedObject<Texture>(MainTranslation);
 			
-			// If the old value is not in the translatedObjects, then unload it as it most likely was loaded from Resources
-			//if (!HasTranslatedObject(Old))
-			//	Resources.UnloadAsset(Old);
+			//// If the old value is not in the translatedObjects, then unload it as it most likely was loaded from Resources
+			////if (!HasTranslatedObject(Old))
+			////	Resources.UnloadAsset(Old);
 		}
 		
 		void DoLocalize_Child( string MainTranslation, string SecondaryTranslation )

@@ -9,7 +9,8 @@ public class CoverTrackerbleEventHandler : TrackableEventHandler
     protected override void Awake()
     {
         base.Awake();
-        targetName = mTrackableBehaviour.TrackableName.ToLower();
+        //바꿔야합니다0627
+        //targetName = mTrackableBehaviour.TrackableName.ToLower();
     }
 
     protected override void OnTrackingFound()

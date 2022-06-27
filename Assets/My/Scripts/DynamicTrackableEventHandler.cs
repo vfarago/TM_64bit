@@ -20,7 +20,8 @@ public class DynamicTrackableEventHandler : TrackableEventHandler
     protected override void Awake()
     {
         base.Awake();
-        targetName = mTrackableBehaviour.TrackableName.ToLower();
+        //바꿔야합니다0627
+        //targetName = mTrackableBehaviour.TrackableName.ToLower();
     }
 
     #region PRIVATE_METHODS
@@ -156,7 +157,8 @@ public class DynamicTrackableEventHandler : TrackableEventHandler
                     panGesture.AddFriendlyGesture(scaleGesture);
 
                     TSGestureHandler gestureHandler = m3dModel.AddComponent<TSGestureHandler>();
-                    gestureHandler.mTrackableBehaviour = mTrackableBehaviour;
+                    //임시조치입니다0627
+                    //gestureHandler.mTrackableBehaviour = mTrackableBehaviour;
                     gestureHandler.targetName = targetName;
                     gestureHandler.isFreeModel = isFreeModel;
                     gestureHandler.enabled = true;
@@ -330,7 +332,8 @@ public class DynamicTrackableEventHandler : TrackableEventHandler
                     panGesture.AddFriendlyGesture(scaleGesture);
 
                     TSGestureHandler gestureHandler = m3dModel.AddComponent<TSGestureHandler>();
-                    gestureHandler.mTrackableBehaviour = mTrackableBehaviour;
+                    //바꿔야합니다0627
+                    //gestureHandler.mTrackableBehaviour = mTrackableBehaviour;
                     gestureHandler.targetName = str;
                     gestureHandler.isFreeModel = isFree;
                     gestureHandler.enabled = true;

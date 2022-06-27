@@ -19,7 +19,7 @@ public class CheckCode : MonoBehaviour
 
     CanvasManager canvasManager;
     AccountManager accountManager;
-    private string title = "tm_full";
+    private string title = "tm";
     private static string dataFolder;
 
     public bool reLogined;
@@ -40,7 +40,7 @@ public class CheckCode : MonoBehaviour
     public void Awake()
     {
         isScaned = new bool[5];
-        for(int i = 0; i <5; i++)
+        for (int i = 0; i < 5; i++)
         {
             isScaned[i] = false;
         }
@@ -122,7 +122,7 @@ public class CheckCode : MonoBehaviour
                 //File.Delete(path);
                 reLogined = true;
                 CheckRegister();
-            }           
+            }
 
             else
             {
@@ -364,7 +364,7 @@ public class CheckCode : MonoBehaviour
 
                 if (readSplit[i].Contains("ADMIN_ACCOUNT"))
                 {
-                    for(int j = 0; j <5; j++)
+                    for (int j = 0; j < 5; j++)
                     {
                         isScaned[j] = true;
                     }
@@ -695,7 +695,7 @@ public class CheckCode : MonoBehaviour
     public IEnumerator StartSignUp(string id, string pw, string name, string email, System.Action<string> returned)
     {
         WWWForm form = new WWWForm();
-        form.AddField("signuptitle", title);
+        form.AddField("title", title);
         form.AddField("username", id);
         form.AddField("password", pw);
         form.AddField("name", name);
@@ -890,7 +890,7 @@ public class CheckCode : MonoBehaviour
     public void Logout()
     {
         isLogined = false;
-        for(int i = 0; i <5; i++)
+        for (int i = 0; i < 5; i++)
         {
             isScaned[i] = false;
         }

@@ -44,7 +44,8 @@ public class ARManager : MonoBehaviour
         //first stop ObjectTracker
         bool needsObjectTrackerRestart = stopRunningObjectTracker();
 
-        VuforiaUnity.SetHint(VuforiaUnity.VuforiaHint.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 10);
+        //바꿔야합니다0627
+        //VuforiaUnity.SetHint(VuforiaUnity.VuforiaHint.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 10);
         hintState = HintState.MULTI;
 
         //finally restart ObjectTracker
@@ -59,7 +60,8 @@ public class ARManager : MonoBehaviour
         bool needsObjectTrackerRestart = stopRunningObjectTracker();
 
         hintState = HintState.SINGLE;
-        VuforiaUnity.SetHint(VuforiaUnity.VuforiaHint.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 1);
+        //바꿔야합니다0627
+        //VuforiaUnity.SetHint(VuforiaUnity.VuforiaHint.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 1);
 
         if (needsObjectTrackerRestart)
             restartRunningObjectTracker();
@@ -73,7 +75,8 @@ public class ARManager : MonoBehaviour
         stopRunningObjectTracker();
 
         hintState = HintState.ZERO;
-        VuforiaUnity.SetHint(VuforiaUnity.VuforiaHint.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 0); //it doesn't seem to work
+        //바꿔야합니다0627
+        //VuforiaUnity.SetHint(VuforiaUnity.VuforiaHint.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 0); //it doesn't seem to work
 
         ////finally restart ObjectTracker
         //if (needsObjectTrackerRestart)
@@ -86,15 +89,16 @@ public class ARManager : MonoBehaviour
     {
         bool needsObjectTrackerRestart = false;
 
-        ObjectTracker objectTracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
-        if (objectTracker != null)
-        {
-            if (objectTracker.IsActive)
-            {
-                objectTracker.Stop();
-                needsObjectTrackerRestart = true;
-            }
-        }
+        //바꿔야합니다0627
+        //ObjectTracker objectTracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
+        //if (objectTracker != null)
+        //{
+        //    if (objectTracker.IsActive)
+        //    {
+        //        objectTracker.Stop();
+        //        needsObjectTrackerRestart = true;
+        //    }
+        //}
         return needsObjectTrackerRestart;
     }
 
@@ -104,14 +108,15 @@ public class ARManager : MonoBehaviour
     {
         bool hasObjectTrackerRestarted = false;
 
-        ObjectTracker objectTracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
-        if (objectTracker != null)
-        {
-            if (!objectTracker.IsActive)
-            {
-                hasObjectTrackerRestarted = objectTracker.Start();
-            }
-        }
+        //바꿔야합니다0627
+        //ObjectTracker objectTracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
+        //if (objectTracker != null)
+        //{
+        //    if (!objectTracker.IsActive)
+        //    {
+        //        hasObjectTrackerRestarted = objectTracker.Start();
+        //    }
+        //}
         return hasObjectTrackerRestarted;
     }
 
@@ -146,86 +151,89 @@ public class ARManager : MonoBehaviour
     }
 
 
+    //안씁니다0627
     //https://developer.vuforia.com/forum/faq/unity-how-select-camera-and-mirroring
-    public void UseFrontCamera(bool ready)
-    {
+    //public void UseFrontCamera(bool ready)
+    //{
 
-        if (ready) //Front Camera = true
-        {
-            isFrontCamera = true;
+    //    if (ready) //Front Camera = true
+    //    {
+    //        isFrontCamera = true;
 
-            // turn off the curent camera : the back camera
-            Vuforia.CameraDevice.Instance.Stop();
-            Vuforia.CameraDevice.Instance.Deinit();
+    //        // turn off the curent camera : the back camera
+    //        Vuforia.CameraDevice.Instance.Stop();
+    //        Vuforia.CameraDevice.Instance.Deinit();
 
-            // turn on the front camera
-            Vuforia.CameraDevice.Instance.Init(Vuforia.CameraDevice.CameraDirection.CAMERA_FRONT);
-            Vuforia.CameraDevice.Instance.Start();
+    //        // turn on the front camera
+    //        Vuforia.CameraDevice.Instance.Init(Vuforia.CameraDevice.CameraDirection.CAMERA_FRONT);
+    //        Vuforia.CameraDevice.Instance.Start();
 
-            //turn on the mirroring
-            Vuforia.VuforiaRenderer.VideoBGCfgData config = Vuforia.VuforiaRenderer.Instance.GetVideoBackgroundConfig();
-            config.reflection = Vuforia.VuforiaRenderer.VideoBackgroundReflection.ON;
-            Vuforia.VuforiaRenderer.Instance.SetVideoBackgroundConfig(config);
+    //        //turn on the mirroring
+    //        Vuforia.VuforiaRenderer.VideoBGCfgData config = Vuforia.VuforiaRenderer.Instance.GetVideoBackgroundConfig();
+    //        config.reflection = Vuforia.VuforiaRenderer.VideoBackgroundReflection.ON;
+    //        Vuforia.VuforiaRenderer.Instance.SetVideoBackgroundConfig(config);
 
-            //Debug.Log("UseFrontCamera");
-            return;
-        }
-        else //Back Camera = false
-        {
-            isFrontCamera = false;
+    //        //Debug.Log("UseFrontCamera");
+    //        return;
+    //    }
+    //    else //Back Camera = false
+    //    {
+    //        isFrontCamera = false;
 
-            // turn off the curent camera : the front camera
-            Vuforia.CameraDevice.Instance.Stop();
-            Vuforia.CameraDevice.Instance.Deinit();
+    //        // turn off the curent camera : the front camera
+    //        Vuforia.CameraDevice.Instance.Stop();
+    //        Vuforia.CameraDevice.Instance.Deinit();
 
-            // turn on the back camera
-            Vuforia.CameraDevice.Instance.Init(Vuforia.CameraDevice.CameraDirection.CAMERA_BACK);
-            Vuforia.CameraDevice.Instance.Start();
+    //        // turn on the back camera
+    //        Vuforia.CameraDevice.Instance.Init(Vuforia.CameraDevice.CameraDirection.CAMERA_BACK);
+    //        Vuforia.CameraDevice.Instance.Start();
 
-            //turn off the mirroring
-            Vuforia.VuforiaRenderer.VideoBGCfgData config = Vuforia.VuforiaRenderer.Instance.GetVideoBackgroundConfig();
-            config.reflection = Vuforia.VuforiaRenderer.VideoBackgroundReflection.OFF;
-            Vuforia.VuforiaRenderer.Instance.SetVideoBackgroundConfig(config);
+    //        //turn off the mirroring
+    //        Vuforia.VuforiaRenderer.VideoBGCfgData config = Vuforia.VuforiaRenderer.Instance.GetVideoBackgroundConfig();
+    //        config.reflection = Vuforia.VuforiaRenderer.VideoBackgroundReflection.OFF;
+    //        Vuforia.VuforiaRenderer.Instance.SetVideoBackgroundConfig(config);
 
-            //Debug.Log("UseBackCamera");
-            return;
-        }
-    }
+    //        //Debug.Log("UseBackCamera");
+    //        return;
+    //    }
+    //}
 
     public void TurnOnAR(bool use, bool isStop)
     {
-        if (use)
-        {
-            ActivateDataSet(isStop);
-            // turn on the front camera
-            if (isFrontCamera)
-                Vuforia.CameraDevice.Instance.Init(Vuforia.CameraDevice.CameraDirection.CAMERA_FRONT);
-            else
-                Vuforia.CameraDevice.Instance.Init(Vuforia.CameraDevice.CameraDirection.CAMERA_BACK);
-            Vuforia.CameraDevice.Instance.Start();
-        }
-        else
-        {
-            ActivateDataSet(false);
-            // turn off the curent camera 
-            Vuforia.CameraDevice.Instance.Stop();
-            Vuforia.CameraDevice.Instance.Deinit();
-        }
+        //바꿔야합니다0627
+        //if (use)
+        //{
+        //    ActivateDataSet(isStop);
+        //    // turn on the front camera
+        //    if (isFrontCamera)
+        //        Vuforia.CameraDevice.Instance.Init(Vuforia.CameraDevice.CameraDirection.CAMERA_FRONT);
+        //    else
+        //        Vuforia.CameraDevice.Instance.Init(Vuforia.CameraDevice.CameraDirection.CAMERA_BACK);
+        //    Vuforia.CameraDevice.Instance.Start();
+        //}
+        //else
+        //{
+        //    ActivateDataSet(false);
+        //    // turn off the curent camera 
+        //    Vuforia.CameraDevice.Instance.Stop();
+        //    Vuforia.CameraDevice.Instance.Deinit();
+        //}
     }
 
 
     public void ActivateDataSet(bool activate)
     {
-        Vuforia.ObjectTracker objectTracker = Vuforia.TrackerManager.Instance.GetTracker<Vuforia.ObjectTracker>();
+        //바꿔야합니다0627
+        //Vuforia.ObjectTracker objectTracker = Vuforia.TrackerManager.Instance.GetTracker<Vuforia.ObjectTracker>();
 
-        if (activate)
-        {
-            objectTracker.Start();
-        }
-        else
-        {
-            objectTracker.Stop();
-        }
+        //if (activate)
+        //{
+        //    objectTracker.Start();
+        //}
+        //else
+        //{
+        //    objectTracker.Stop();
+        //}
         //print("               Tracking  " + objectTracker.IsActive);
     }
 

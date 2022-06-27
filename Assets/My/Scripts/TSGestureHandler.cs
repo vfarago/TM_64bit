@@ -19,7 +19,8 @@ public class TSGestureHandler : MonoBehaviour
     float maxScale;
     float minScale;
 
-    public TrackableBehaviour mTrackableBehaviour;
+    //바꿔야합니다0627
+    //public TrackableBehaviour mTrackableBehaviour;
     public string targetName;
     public bool isFreeModel;
     public int counter = 0;
@@ -106,7 +107,8 @@ public class TSGestureHandler : MonoBehaviour
         {
             prefabLoader.TargetOffMoving(gameObject);
             canvasManager.OnTargetOffObject(true);
-            mTrackableBehaviour.OnTrackerUpdate(TrackableBehaviour.Status.NOT_FOUND);
+            //바꿔야합니다0627
+            //mTrackableBehaviour.OnTrackerUpdate(TrackableBehaviour.Status.NOT_FOUND);
         }
 
         yield return new WaitForSeconds(0.05f);
@@ -120,7 +122,8 @@ public class TSGestureHandler : MonoBehaviour
         {
             prefabLoader.TargetOffMoving(gameObject);
             canvasManager.OnTargetOffObject(true);
-            mTrackableBehaviour.OnTrackerUpdate(TrackableBehaviour.Status.NOT_FOUND);
+            //바꿔야합니다0627
+            //mTrackableBehaviour.OnTrackerUpdate(TrackableBehaviour.Status.NOT_FOUND);
         }
 
         yield return new WaitForSeconds(0.05f);
