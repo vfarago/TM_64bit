@@ -21,7 +21,7 @@ public class DynamicTrackableEventHandler : TrackableEventHandler
     {
         base.Awake();
         //바꿔야합니다0627
-        //targetName = mTrackableBehaviour.TrackableName.ToLower();
+        targetName = mTrackableBehaviour.TrackableName.ToLower();
     }
 
     #region PRIVATE_METHODS
@@ -112,7 +112,7 @@ public class DynamicTrackableEventHandler : TrackableEventHandler
                 LocalizationManager.CurrentLanguage = "book";
                 string bookNum = LocalizationManager.GetTermTranslation(targetName);
                 //GameObject go = Resources.Load<GameObject>(string.Format("objects/{0}", targetName));
-                GameObject go = Resources.Load<GameObject>(string.Format("objects/Book{0}/{1}",bookNum, targetName));
+                GameObject go = Resources.Load<GameObject>(string.Format("objects/Book{0}/{1}", bookNum, targetName));
                 LocalizationManager.CurrentLanguage = lang;
                 m3dModel = Instantiate(go, transform, false);
 
@@ -158,7 +158,7 @@ public class DynamicTrackableEventHandler : TrackableEventHandler
 
                     TSGestureHandler gestureHandler = m3dModel.AddComponent<TSGestureHandler>();
                     //임시조치입니다0627
-                    //gestureHandler.mTrackableBehaviour = mTrackableBehaviour;
+                    gestureHandler.mTrackableBehaviour = mTrackableBehaviour;
                     gestureHandler.targetName = targetName;
                     gestureHandler.isFreeModel = isFreeModel;
                     gestureHandler.enabled = true;
@@ -333,7 +333,7 @@ public class DynamicTrackableEventHandler : TrackableEventHandler
 
                     TSGestureHandler gestureHandler = m3dModel.AddComponent<TSGestureHandler>();
                     //바꿔야합니다0627
-                    //gestureHandler.mTrackableBehaviour = mTrackableBehaviour;
+                    gestureHandler.mTrackableBehaviour = mTrackableBehaviour;
                     gestureHandler.targetName = str;
                     gestureHandler.isFreeModel = isFree;
                     gestureHandler.enabled = true;
@@ -348,11 +348,11 @@ public class DynamicTrackableEventHandler : TrackableEventHandler
     void RendererSet(GameObject obj)
     {
         Renderer[] renderer = obj.transform.GetComponentsInChildren<Renderer>(true);
-        foreach(Renderer item in renderer)
+        foreach (Renderer item in renderer)
         {
-            if(item.materials != null)
+            if (item.materials != null)
             {
-                foreach(Material mat in item.materials)
+                foreach (Material mat in item.materials)
                 {
                     Shader sha = mat.shader;
                     Debug.Log(sha.name);
@@ -375,7 +375,7 @@ public class ReturnDB : MonoBehaviour
     {
         string language = I2.Loc.LocalizationManager.CurrentLanguage;
         int lang = -1;
-        switch(language)
+        switch (language)
         {
             case "kor":
                 lang = 0;
