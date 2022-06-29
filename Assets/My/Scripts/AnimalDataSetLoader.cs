@@ -5,6 +5,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System.Xml;
 using Vuforia;
 
 public class AnimalDataSetLoader : MonoBehaviour
@@ -33,56 +34,75 @@ public class AnimalDataSetLoader : MonoBehaviour
     PrefabShelter prefabShelter;
 
     //바꿔야합니다0627
-    //void Awake()
-    //{
-    //    VuforiaAbstractConfiguration.Instance.Vuforia.DelayedInitialization = false;
-    //    arCam.GetComponent<VuforiaBehaviour>().enabled = true;
-    //    VuforiaRuntime.Instance.InitVuforia();
+    void Awake()
+    {
+        //VuforiaAbstractConfiguration.Instance.Vuforia.DelayedInitialization = false;
+        arCam.GetComponent<VuforiaBehaviour>().enabled = true;
+        //VuforiaRuntime.Instance.InitVuforia();
 
-    //    canvasManager = Manager.CanvasManager;
-    //    prefabShelter = Manager.PrefabShelter;
+        canvasManager = Manager.CanvasManager;
+        prefabShelter = Manager.PrefabShelter;
 
-    //    tagmeTargets = new List<string>();
-    //    tagmeDataSets = new List<string>();
+        tagmeTargets = new List<string>();
+        tagmeDataSets = new List<string>();
 
-    //    dataSetName = string.Format("TagMe3D_New_Book{0}", dataSetNumber);
+        dataSetName = string.Format("TagMe3D_New_Book{0}", dataSetNumber);
 
-    //    //Vuforia ver.6.2
-    //    VuforiaARController.Instance.RegisterVuforiaStartedCallback(LoadDataSet);
-    //}
+        //Vuforia ver.6.2
 
-    //void OnDestroy()
-    //{
-    //    VuforiaARController.Instance.UnregisterVuforiaStartedCallback(LoadDataSet);
-    //}
+        //VuforiaARController.Instance.RegisterVuforiaStartedCallback(LoadDataSet);
+        LoadDataSet();
+    }
 
-    //void LoadDataSet()
-    //{
-    //    ObjectTracker objectTracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
+    void OnDestroy()
+    {
+        //VuforiaARController.Instance.UnregisterVuforiaStartedCallback(LoadDataSet);
+    }
 
-    //    dataSetName = string.Format("TagMe3D_New_Book{0}", dataSetNumber);
-    //    DataSet dataSet = objectTracker.CreateDataSet();
-    //    if (dataSet.Load(dataSetName))
-    //    {
-    //        if (!objectTracker.ActivateDataSet(dataSet))
-    //        {
-    //            // Note: ImageTracker cannot have more than 1000 total targets activated
-    //            Debug.Log("<color=yellow>Failed to Activate DataSet: " + (dataSetName) + "</color>");
-    //        }
+    void LoadDataSet()
+    {
+        ////ObjectTracker objectTracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
 
-    //        if (!objectTracker.Start())
-    //        {
-    //            Debug.Log("<color=yellow>Tracker Failed to Start.</color>");
-    //        }
+        //dataSetName = string.Format("TagMe3D_New_Book{0}", dataSetNumber);
+        ////DataSet dataSet = objectTracker.CreateDataSet();
+        //var dataSet = VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget();
+        //if (dataSet.Load(dataSetName))
+        //{
+        //    if (!objectTracker.ActivateDataSet(dataSet))
+        //    {
+        //        // Note: ImageTracker cannot have more than 1000 total targets activated
+        //        Debug.Log("<color=yellow>Failed to Activate DataSet: " + (dataSetName) + "</color>");
+        //    }
 
-    //        StartCoroutine(CheckFile(dataSetName, objectTracker));
-    //        objectTracker.Stop();
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError("<color=yellow>Failed to load dataset: '" + (dataSetName) + "'</color>");
-    //    }
-    //}
+        //    if (!objectTracker.Start())
+        //    {
+        //        Debug.Log("<color=yellow>Tracker Failed to Start.</color>");
+        //    }
+
+        //    StartCoroutine(CheckFile(dataSetName, objectTracker));
+        //    objectTracker.Stop();
+        //}
+        //else
+        //{
+        //    Debug.LogError("<color=yellow>Failed to load dataset: '" + (dataSetName) + "'</color>");
+        //}
+
+        string streamingAssetsPath = Application.streamingAssetsPath;
+        for (int i = 0; i < 5; i++)
+        {
+            string dataSetName = "/Vuforia/TagMe3D_New_Book" + (i + 1).ToString() + ".xml";
+            string finalPath = streamingAssetsPath + dataSetName;
+            if (!File.Exists(finalPath)) continue;
+            else
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(finalPath);
+
+                string targetName = "";
+                var imageTarget = VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(dataSetName, targetName);
+            }
+        }
+    }
 
     //바꿔야합니다0627
     //IEnumerator CheckFile(string dataSetName, ObjectTracker objectTracker)
@@ -276,15 +296,15 @@ public class AnimalDataSetLoader : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
 
-        Manager.MRPanel.gameObject.SetActive(true);
-        Manager.MRPanel.SetButtons();
-        while (!Manager.MRPanel.isDone)
-        {
-            yield return new WaitForEndOfFrame();
-        }
-        Manager.MRPanel.gameObject.SetActive(false);
+        //Manager.MRPanel.gameObject.SetActive(true);
+        //Manager.MRPanel.SetButtons();
+        //while (!Manager.MRPanel.isDone)
+        //{
+        //    yield return new WaitForEndOfFrame();
+        //}
+        //Manager.MRPanel.gameObject.SetActive(false);
         canvasManager.OnLoadingDone();
-        
+
         yield return null;
     }
 
@@ -308,7 +328,7 @@ public class AnimalDataSetLoader : MonoBehaviour
             }
             if (File.Exists(path))
             {
-                if(Application.internetReachability == NetworkReachability.NotReachable)
+                if (Application.internetReachability == NetworkReachability.NotReachable)
                 {
                     isCheck = true;
                     break;
@@ -320,8 +340,7 @@ public class AnimalDataSetLoader : MonoBehaviour
 
                     UnityWebRequest reqs = UnityWebRequest.Head(url + fileName);
                     reqs.SendWebRequest();
-
-                    while (reqs.isDone)
+                    while (!reqs.isDone)
                     {
                         yield return new WaitForEndOfFrame();
                     }

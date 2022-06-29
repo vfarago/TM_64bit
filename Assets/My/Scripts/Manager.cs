@@ -5,7 +5,7 @@ using UnityEngine;
 public class Manager : MonoBehaviour
 {
     private static Manager instance = null;
-    private static MRPanel mrPanel;
+    //private static MRPanel mrPanel;
     private static PrefabShelter prefabShelter;
     private static PrefabLoader prefabLoader;
     private static CanvasManager canvasManager;
@@ -28,7 +28,7 @@ public class Manager : MonoBehaviour
     }
     private void Initialized()
     {
-        mrPanel = FindObjectOfType<MRPanel>();
+        //mrPanel = FindObjectOfType<MRPanel>();
         prefabShelter = FindObjectOfType<PrefabShelter>();
         prefabLoader = FindObjectOfType<PrefabLoader>();
         canvasManager = FindObjectOfType<CanvasManager>();
@@ -48,22 +48,22 @@ public class Manager : MonoBehaviour
             return instance;
         }
     }
-    public static MRPanel MRPanel
-    {
-        get
-        {
-            if (null == mrPanel)
-            {
-                return null;
-            }
-            return mrPanel;
-        }
-    }
+    //public static MRPanel MRPanel
+    //{
+    //    get
+    //    {
+    //        if (null == mrPanel)
+    //        {
+    //            return null;
+    //        }
+    //        return mrPanel;
+    //    }
+    //}
     public static PrefabShelter PrefabShelter
     {
         get
         {
-            if(null == prefabShelter)
+            if (null == prefabShelter)
             {
                 return null;
             }
@@ -74,7 +74,7 @@ public class Manager : MonoBehaviour
     {
         get
         {
-            if(null == prefabLoader)
+            if (null == prefabLoader)
             {
                 return null;
             }

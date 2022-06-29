@@ -69,8 +69,8 @@ public class PermissionController : MonoBehaviour
         SceneManager.LoadScene("SPlash");
 #endif
         //아래두줄 임시조치입니다 0627
-        SceneManager.LoadScene("SPlash");
-        return null;
+        //SceneManager.LoadScene("SPlash");
+        //return null;
     }
 
     private bool Check(string what)

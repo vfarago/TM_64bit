@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using Vuforia;
 
-public class TrackableEventHandler : MonoBehaviour, ITrackableEventHandler
+//public class TrackableEventHandler : MonoBehaviour, ITrackableEventHandler
+public class TrackableEventHandler : DefaultObserverEventHandler
 {
-    protected TrackableBehaviour mTrackableBehaviour;
+    //protected TrackableBehaviour mTrackableBehaviour;
     protected ObserverBehaviour mTrackableBehaviour;
-    protected TrackableBehaviour.Status currentStatus;
+    //protected TrackableBehaviour.Status currentStatus;
 
     protected ARManager arManager;
     protected CanvasManager canvasManager;
@@ -19,32 +20,33 @@ public class TrackableEventHandler : MonoBehaviour, ITrackableEventHandler
         prefabLoader = Manager.PrefabLoader;
         prefabShelter = Manager.PrefabShelter;
 
-        mTrackableBehaviour = GetComponent<TrackableBehaviour>();
+        //mTrackableBehaviour = GetComponent<TrackableBehaviour>();
         mTrackableBehaviour = GetComponent<ObserverBehaviour>();
         if (mTrackableBehaviour)
-        {
-            mTrackableBehaviour.RegisterTrackableEventHandler(this);
-        }
-        currentStatus = TrackableBehaviour.Status.DETECTED;
+        //{
+        //    mTrackableBehaviour.RegisterTrackableEventHandler(this);
+        //}
+        //currentStatus = TrackableBehaviour.Status.DETECTED;
         OnTrackingLost();
     }
 
 
-    public virtual void OnTrackableStateChanged(TrackableBehaviour.Status previousStatus, TrackableBehaviour.Status newStatus)
-    {
-        if (newStatus == TrackableBehaviour.Status.DETECTED ||
-            newStatus == TrackableBehaviour.Status.TRACKED ||
-            newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED)
-        {
-            currentStatus = newStatus;
-            OnTrackingFound();
-        }
-        else
-        {
-            currentStatus = newStatus;
-            OnTrackingLost();
-        }
-    }
+    //바꿔야합니다0627
+    //public virtual void OnTrackableStateChanged(TrackableBehaviour.Status previousStatus, TrackableBehaviour.Status newStatus)
+    //{
+    //    if (newStatus == TrackableBehaviour.Status.DETECTED ||
+    //        newStatus == TrackableBehaviour.Status.TRACKED ||
+    //        newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED)
+    //    {
+    //        currentStatus = newStatus;
+    //        OnTrackingFound();
+    //    }
+    //    else
+    //    {
+    //        currentStatus = newStatus;
+    //        OnTrackingLost();
+    //    }
+    //}
 
     protected virtual void OnTrackingFound()
     {
